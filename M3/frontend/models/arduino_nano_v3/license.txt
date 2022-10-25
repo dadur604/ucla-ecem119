@@ -1,0 +1,11 @@
+Model Information:
+* title:	Arduino Nano V3 Mini USB download free
+* source:	https://sketchfab.com/3d-models/arduino-nano-v3-mini-usb-download-free-c32b69f84f874565b9f8ac9a86944ac0
+* author:	rom35076 (https://sketchfab.com/rom35076)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Arduino Nano V3 Mini USB download free" (https://sketchfab.com/3d-models/arduino-nano-v3-mini-usb-download-free-c32b69f84f874565b9f8ac9a86944ac0) by rom35076 (https://sketchfab.com/rom35076) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

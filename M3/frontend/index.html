@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arduino IMU</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script
+      async
+      src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.145.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="index.js"></script>
+
+    <div
+      style="
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 2em;
+        font-weight: bold;
+      "
+    >
+      Arduino IoT IMU Visualization
+      <div style="font-size: 1rem; font-weight: normal">UCLA ECE M119 M3</div>
+    </div>
+
+    <div
+      id="RawText"
+      style="position: absolute; bottom: 20px; left: 20px; font-size: 1em"
+    ></div>
+  </body>
+</html>
