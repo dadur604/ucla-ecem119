@@ -12,6 +12,8 @@ const paddleWidth = 20;
 const paddleHeight = 100;
 const ballRadius = 20;
 
+let score = 0;
+
 // create an engine
 var engine = Engine.create({
   gravity: {
@@ -19,6 +21,7 @@ var engine = Engine.create({
     y: 0,
   },
 });
+const world = engine.world;
 
 // create a renderer
 var render = Render.create({
@@ -44,6 +47,27 @@ var rightPaddle = Bodies.rectangle(
     render: { fillStyle: "0xffffff" },
   }
 );
+
+// create right sensor
+var rightSensor = Bodies.rectangle(width, height / 2, 10, height, {
+  isStatic: true,
+  isSensor: true,
+  label: "rightsensor",
+});
+
+Events.on(engine, "collisionStart", function (event) {
+  var pairs = event.pairs;
+
+  // change object colours to show those starting a collision
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    if (pair.bodyA.label === "rightsensor" && pair.bodyB.label === "ball") {
+      Body.setPosition(ball, { x: width / 2, y: height / 2 });
+      score--;
+      document.getElementById("Score").innerText = score;
+    }
+  }
+});
 
 // create left "paddle"
 var leftPaddle = Bodies.rectangle(
@@ -75,13 +99,21 @@ var ball = Bodies.circle(width / 2, height / 2, ballRadius, {
   friction: 0,
   inertia: Infinity,
   frictionAir: 0,
-  restitution: 1,
+  restitution: 1.005,
+  label: "ball",
 });
 
 Body.applyForce(ball, { x: 0, y: 0 }, { x: 0.01, y: 0.0 });
 
 // add all of the bodies to the world
-Composite.add(engine.world, [ball, rightPaddle, leftPaddle, floor, ceiling]);
+Composite.add(engine.world, [
+  rightSensor,
+  ball,
+  rightPaddle,
+  leftPaddle,
+  floor,
+  ceiling,
+]);
 
 // run the renderer
 Render.run(render);
