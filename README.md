@@ -17,6 +17,7 @@
 ## Repository Structure
 
 - [**M1**](M1/) - Arduino "Hello World"
-- [**M2**](M2/) - Arduino WiFi & BLE
+- [**M2**](M2/) - Arduino WiFi & BLE  
+- [**M3**](M3/) - Arduino Data Visualization over WiFi
 
 ---
