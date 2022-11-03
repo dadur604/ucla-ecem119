@@ -1,0 +1,22 @@
+{
+  "name": "ece-m119-m3",
+  "version": "1.0.0",
+  "description": "**Course**: Fundamentals of Embedded Networked Systems",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadur604/ucla-ecem119.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dadur604/ucla-ecem119/issues"
+  },
+  "homepage": "https://github.com/dadur604/ucla-ecem119#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
