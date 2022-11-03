@@ -135,16 +135,21 @@ const animate = () => {
 
   if (meshScene) {
     meshScene.rotation.set(
-      (-1 * (animatedSensorValues.gx * Math.PI)) / 180,
-      (animatedSensorValues.gz * Math.PI) / 180,
-      (animatedSensorValues.gy * Math.PI) / 180,
-      "XYZ"
+      -1 * animatedSensorValues.phi,
+      -1 * animatedSensorValues.psi,
+      -1 * animatedSensorValues.theta
     );
-    meshScene.position.set(
-      animatedSensorValues.ax * 1000,
-      animatedSensorValues.az * 1000 - 1000,
-      animatedSensorValues.ay * -1000
-    );
+    // meshScene.rotation.set(
+    //   (-1 * (animatedSensorValues.gx * Math.PI)) / 180,
+    //   (animatedSensorValues.gz * Math.PI) / 180,
+    //   (animatedSensorValues.gy * Math.PI) / 180,
+    //   "XYZ"
+    // );
+    // meshScene.position.set(
+    //   animatedSensorValues.ax * 1000,
+    //   animatedSensorValues.az * 1000 - 1000,
+    //   animatedSensorValues.ay * -1000
+    // );
 
     // Update XY Map
 
@@ -178,7 +183,10 @@ const tickApi = async () => {
     sensorValues.az,
     sensorValues.gx,
     sensorValues.gy,
-    sensorValues.gz
+    sensorValues.gz,
+    sensorValues.phi,
+    sensorValues.theta,
+    sensorValues.psi
   );
 
   setTimeout(tickApi, 100);
@@ -192,12 +200,12 @@ const intl = new Intl.NumberFormat("en-US", {
   minimumIntegerDigits: 3,
 });
 
-const printDebug = (ax, ay, az, gx, gy, gz) => {
+const printDebug = (ax, ay, az, gx, gy, gz, phi, theta, psi) => {
   ax = intl.format(ax);
   ay = intl.format(ay);
   az = intl.format(az);
   gx = intl.format(gx);
   gy = intl.format(gy);
   gz = intl.format(gz);
-  return `${ax}\t${ay}\t${az}\t${gx}\t${gy}\t${gz}`;
+  return `${ax}\t${ay}\t${az}\t${gx}\t${gy}\t${gz}\t${phi}\t${theta}\t${psi}`;
 };

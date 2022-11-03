@@ -3,7 +3,7 @@
 // 3) Run arduino m2.ino program
 // 4) Navigate to localhost:3000/
 
-const { clear } = require("node:console");
+const { clear, time, Console } = require("node:console");
 const dgram = require("node:dgram");
 const express = require("express");
 
@@ -22,6 +22,7 @@ udpServer.on("error", (err) => {
   server.close();
 });
 
+let lastUpdatedSensorTime;
 let sensorValues = {
   ax: 0,
   ay: 0,
@@ -29,6 +30,16 @@ let sensorValues = {
   gx: 0,
   gy: 0,
   gz: 0,
+  phi: 0,
+  theta: 0,
+  psi: 0,
+};
+
+const alpha = 0.05;
+
+let currentAttitudeEstimation = {
+  roll: 0,
+  pitch: 0,
 };
 
 udpServer.on("message", (msg, rinfo) => {
@@ -38,6 +49,58 @@ udpServer.on("message", (msg, rinfo) => {
   sensorValues.gx = msg.readFloatLE(12);
   sensorValues.gy = msg.readFloatLE(16);
   sensorValues.gz = msg.readFloatLE(20);
+  sensorValues.phi = msg.readFloatLE(24);
+  sensorValues.theta = msg.readFloatLE(28);
+  sensorValues.psi = msg.readFloatLE(32);
+
+  // Basic Attitude Estimation using Complementary Filter
+  const currentTime = new Date().getTime();
+
+  if (lastUpdatedSensorTime === undefined) {
+    currentAttitudeEstimation = {
+      pitch: 0,
+      roll: 0,
+    };
+  } else {
+    const phi = currentAttitudeEstimation.roll;
+    const theta = currentAttitudeEstimation.pitch;
+
+    const deltaTime_ms = currentTime - lastUpdatedSensorTime;
+
+    /*
+      Get Attitude Estimation from Gyro
+    */
+    const phi_dot_gyro =
+      sensorValues.gx +
+      sensorValues.gy * Math.sin(phi) * Math.tan(theta) +
+      sensorValues.gz * Math.cos(phi) * Math.tan(theta);
+    const theta_dot_gyro =
+      sensorValues.gy * Math.cos(phi) - sensorValues.gz * Math.sin(phi);
+
+    const phi_gyro = phi + (deltaTime_ms / 1000) * phi_dot_gyro;
+    const theta_gyro = theta + (deltaTime_ms / 1000) * theta_dot_gyro;
+
+    /*
+      Get Attitude Estimation from Accelerometer
+    */
+    const phi_accel = Math.atan2(sensorValues.ay, sensorValues.az);
+    const theta_accel = Math.asin(sensorValues.ax / 9.8);
+
+    /*
+      Complementary
+    */
+
+    // currentAttitudeEstimation = {
+    //   pitch: alpha * theta_accel + (1 - alpha) * theta_gyro,
+    //   roll: alpha * phi_accel + (1 - alpha) * phi_gyro,
+    // };
+    currentAttitudeEstimation = {
+      pitch: theta_gyro,
+      roll: phi_gyro,
+    };
+  }
+
+  lastUpdatedSensorTime = currentTime;
 
   // displayStats(
   //   sensorValues.ax,
@@ -47,6 +110,10 @@ udpServer.on("message", (msg, rinfo) => {
   //   sensorValues.gy,
   //   sensorValues.gz
   // );
+
+  console.log(
+    `Roll: ${currentAttitudeEstimation.roll}, Pitch: ${currentAttitudeEstimation.pitch}`
+  );
 });
 
 udpServer.on("listening", () => {
