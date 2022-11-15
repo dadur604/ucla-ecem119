@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Arduino Pong</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      * {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="matter.js"></script>
+    <script type="module" src="index.js"></script>
+
+    <div
+      style="
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 2em;
+        font-weight: bold;
+      "
+    >
+      Arduino IoT Pong
+      <div style="font-size: 1rem; font-weight: normal">UCLA ECE M119 M5</div>
+    </div>
+
+    <div
+      id="RawText"
+      style="position: absolute; bottom: 20px; left: 20px; font-size: 1em"
+    ></div>
+
+    <div
+      id="LeftScore"
+      style="position: absolute; top: 20px; left: 350px; font-size: 3em"
+    >
+      0
+    </div>
+    <div
+      id="RightScore"
+      style="position: absolute; top: 20px; left: 450px; font-size: 3em"
+    >
+      0
+    </div>
+  </body>
+</html>
