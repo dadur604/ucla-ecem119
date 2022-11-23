@@ -7,7 +7,8 @@ char ssid[] = "Narek";
 char pass[] = "00000000";
 
 int udpPort = 600;
-char remoteIP[] = "172.20.10.2";
+char remoteIP[] = "192.168.137.1";
+// char remoteIP[] = "172.20.10.2";
 int remotePort = 41234;
 
 int status = WL_IDLE_STATUS;
@@ -27,7 +28,7 @@ WiFiUDP wifiUdp;
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial);
+  //while (!Serial);
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -48,7 +49,7 @@ void setup() {
 
     status = WiFi.begin(ssid, pass);
 
-    delay(5000);
+    delay(500);
   }
 
   Serial.println("Connected to network");
@@ -65,10 +66,13 @@ void setup() {
   Serial.println(WiFi.SSID());
 
   Serial.println("--------------------");
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(5000);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 const float G = 9.806;
-const float alpha = 0.05;
+const float alpha = 0.02;
 //const float DEG_TO_RAD = 3.1415 / 180;
 
 // ******
@@ -87,9 +91,9 @@ void loop() {
     ax *= G; ay *= G; az *= G;
 
     // Lowpass Filter
-    axf = 0.9*axf + 0.05*ax + 0.05*ax1;
-    ayf = 0.9*ayf + 0.05*ay + 0.05*ay1;
-    azf = 0.9*azf + 0.05*az + 0.05*az1;
+    axf = 0.95*axf + 0.025*ax + 0.025*ax1;
+    ayf = 0.95*ayf + 0.025*ay + 0.025*ay1;
+    azf = 0.95*azf + 0.025*az + 0.025*az1;
     ax1 = ax;
     ay1 = ay;
     az1 = az;
@@ -100,9 +104,9 @@ void loop() {
     gx *= DEG_TO_RAD; gy *= DEG_TO_RAD; gz *= DEG_TO_RAD;
 
     // Lowpass Filter
-    gxf = 0.9*gxf + 0.05*gx + 0.05*gx1;
-    gyf = 0.9*gyf + 0.05*gy + 0.05*gy1;
-    gzf = 0.9*gzf + 0.05*gz + 0.05*gz1;
+    gxf = 0.95*gxf + 0.025*gx + 0.025*gx1;
+    gyf = 0.95*gyf + 0.025*gy + 0.025*gy1;
+    gzf = 0.95*gzf + 0.025*gz + 0.025*gz1;
     gx1 = gx;
     gy1 = gy;
     gz1 = gz;

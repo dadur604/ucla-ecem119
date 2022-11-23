@@ -60,6 +60,11 @@ udpServer.on("message", (msg, rinfo) => {
     player = "p1";
   }
 
+  // const f = msg.readFloatLE();
+  // const dt = msg.readUInt8(4);
+
+  // console.log(`F: ${f}; DT: ${dt}`);
+
   sensorValues[player].ax = msg.readFloatLE();
   sensorValues[player].ay = msg.readFloatLE(4);
   sensorValues[player].az = msg.readFloatLE(8);
